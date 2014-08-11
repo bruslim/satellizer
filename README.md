@@ -142,12 +142,12 @@ how the authentication process works.
 
 ### Login with OAuth 2.0
 
-1. Open a popup window by callign `$auth.authenticate('provider_name')`.
+1. Start the OAuth2 process by opening the provider's login in a popup window (via `$auth.authenticate('provider_name')`).
 2. *Sign in* with that provider by entering your username and password.
-3. Popup is redirected back to your app, e.g. **http://localhost:3000**, with the `?code=` url parameter.
-4. The code is sent back to the parent window and popup is immediately closed.
-5. Parent window sends a `POST` request to **/auth/provider** with the authorization code from popup.
-6. On the server, *authorization code* is exchanged for *access token*.
+3. The provider responds with a http redirect back to your app, e.g. **http://localhost:3000**, with the `?code=` url parameter.
+4. Satellizer will parse the authorization code from the querystring, and close the popup window.
+5. Satellizer sends a `POST` request to **/auth/provider** with the authorization code.
+6. On your server, the *authorization code* is exchanged for an *access token*.
 7. User information is retrived using the *access token* from **Step 6**.
 8. Look up the user by the unique *provider id*. If user already exists, grab 
 the existing user, otherwise create a new user account.
